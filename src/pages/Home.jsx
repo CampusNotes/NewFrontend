@@ -40,19 +40,21 @@ function Home() {
                       <li className='text-white font-outfit font-light tracking-wide'>Input order details seamlessly for accurate billing.</li>
                     </ul>
                   </div>
-                  <div className='w-full hidden lg:block lg:w-[40%]'>
-                    <img src={reciept} alt="" className='w-full h-auto rounded-xl' />
+                  <div className='w-full hidden lg:block lg:w-[40%]  relative overflow-hidden bg-cover bg-no-repeat'>
+                    <img src={reciept} alt="" className='w-full rounded-md h-auto transition duration-300 ease-in-out hover:scale-110' />
                   </div>
                 </div>
               </div>
               <div className='bg-black rounded-xl p-6 flex flex-col gap-2'>
-                <div className='flex items-center justify-end'>
-                  <LockClosedIcon className='h-14 text-white' />
-                </div>
-                <div>
-                  <h2 className='text-white text-3xl font-outfit font-semibold tracking-widest uppercase'>
-                    Secure and Reliable
-                  </h2>
+                <div className='rotate-90 md:rotate-0'>
+                  <div className='md:flex items-center justify-end hidden'>
+                    <LockClosedIcon className='h-6 md:h-8 lg:h-14 text-white' />
+                  </div>
+                  <div className=''>
+                    <h2 className='text-white text-xl md:text-2xl lg:text-4xl font-outfit font-semibold tracking-widest uppercase '>
+                      Secure and Reliable
+                    </h2>
+                  </div>
                 </div>
 
               </div>
@@ -73,7 +75,7 @@ function Home() {
 
                 </div>
                 <div className='bg-black rounded-xl p-6 flex items-center justify-center'>
-                  <h2 className='text-white text-3xl font-outfit font-semibold tracking-wider capitalize'>QR code accessible bills</h2>
+                  <h2 className='text-white text-2xl md:text-3xl lg:text-4xl font-outfit font-semibold tracking-wider capitalize'>QR code accessible bills</h2>
                 </div>
                 <div className='bg-black rounded-xl p-6 flex flex-col gap-4'>
                   <h2 className='text-white text-xl font-outfit font-semibold tracking-wider capitalize'>Want to know more</h2>
