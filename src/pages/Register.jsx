@@ -6,9 +6,69 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import RegisterImage from '../assets/Order food-bro.svg'
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import validator from 'validator';
+import { useState } from "react";
+import { RegisterService } from "../services/AuthServices";
+import Notify from "../helpers/Notify";
 
 export function Register() {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!email) {
+      Notify('error', 'Please enter email');
+      return;
+    }
+
+    if (!validator.isEmail(email)) {
+      Notify('error', 'Please enter valid email');
+      return;
+    }
+
+    if (!password) {
+      Notify('error', 'Please enter password');
+      return;
+    }
+
+    if (!confirmPassword) {
+      Notify('error', 'Password renter password');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Notify('error', 'Passwords do not match');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const data = {
+        email,
+        password
+      }
+      const isRegistered = await RegisterService(data);
+      if(isRegistered){
+        setIsLoading(false);
+        Notify('success','Registeration successfull');
+        navigate('/order')
+      }
+      else{
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+
+  }
+
   return (
     <>
       <div className="bg-black ">
@@ -37,19 +97,9 @@ export function Register() {
               <Typography color="gray" className="mt-1 font-normal">
                 Nice to meet you! Enter your details to register.
               </Typography>
-              <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+              <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={(e) => handleSubmit(e)}>
                 <div className="mb-1 flex flex-col gap-6">
-                  <Typography variant="h6" color="blue-gray" className="-mb-3">
-                    Your Name
-                  </Typography>
-                  <Input
-                    size="lg"
-                    placeholder="name@mail.com"
-                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                    labelProps={{
-                      className: "before:content-none after:content-none",
-                    }}
-                  />
+
                   <Typography variant="h6" color="blue-gray" className="-mb-3">
                     Your Email
                   </Typography>
@@ -60,6 +110,7 @@ export function Register() {
                     labelProps={{
                       className: "before:content-none after:content-none",
                     }}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <Typography variant="h6" color="blue-gray" className="-mb-3">
                     Password
@@ -72,10 +123,24 @@ export function Register() {
                     labelProps={{
                       className: "before:content-none after:content-none",
                     }}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <Typography variant="h6" color="blue-gray" className="-mb-3">
+                    Confirm Password
+                  </Typography>
+                  <Input
+                    type="password"
+                    size="lg"
+                    placeholder="********"
+                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                    labelProps={{
+                      className: "before:content-none after:content-none",
+                    }}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                 </div>
 
-                <Button className="mt-6" fullWidth>
+                <Button loading={isLoading} type="submit" className="mt-6" fullWidth>
                   sign up
                 </Button>
                 <Typography color="gray" className="mt-4 text-center font-normal">

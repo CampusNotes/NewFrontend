@@ -6,9 +6,60 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import RegisterImage from '../assets/Order food-bro.svg'
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import validator from "validator";
+import Notify from "../helpers/Notify";
+import { LoginService } from "../services/AuthServices";
+
 
 export function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!email) {
+      Notify('error', 'Please enter email');
+      return;
+    }
+
+    if (!validator.isEmail(email)) {
+      Notify('error', 'Please enter valid email');
+      return;
+    }
+
+    if (!password) {
+      Notify('error', 'Please enter password');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const data = {
+        email,
+        password
+      }
+      const isLoggedIn = await LoginService(data)
+      
+      if (isLoggedIn) {
+        setIsLoading(false);
+        Notify('success', 'Login successfull');
+        navigate('/order')
+      }
+      else {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+
+  }
+
+
   return (
     <>
       <div className="bg-black ">
@@ -37,7 +88,7 @@ export function Login() {
               <Typography color="gray" className="mt-1 font-normal">
                 Nice to meet you! Enter your details to Login.
               </Typography>
-              <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+              <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={(e) => handleSubmit(e)}>
                 <div className="mb-1 flex flex-col gap-6">
 
                   <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -50,6 +101,7 @@ export function Login() {
                     labelProps={{
                       className: "before:content-none after:content-none",
                     }}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <Typography variant="h6" color="blue-gray" className="-mb-3">
                     Password
@@ -62,10 +114,11 @@ export function Login() {
                     labelProps={{
                       className: "before:content-none after:content-none",
                     }}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
 
-                <Button className="mt-6" fullWidth>
+                <Button loading={isLoading} type="submit" className="mt-6" fullWidth>
                   sign in
                 </Button>
                 <Typography color="gray" className="mt-4 text-center font-normal">
