@@ -1,16 +1,29 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Notify from '../helpers/Notify'
 import { Button, Input, Typography } from '@material-tailwind/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { PowerIcon } from '@heroicons/react/24/solid'
+import { LogoutService } from '../services/AuthServices'
 
 
 function DashboardNav() {
+  const [isloading, setIsLoading] = useState(false)
+  const navigate = useNavigate()
 
-  const handleClick = () => {
+  const handleLogout = async () => {
+    try {
+      const isLoggedOut = await LogoutService();
 
+      if(isLoggedOut){
+        Notify('success', "You have been logged out successfully");
+        navigate('/')
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -37,7 +50,7 @@ function DashboardNav() {
             />
           </div>
           <div className='flex items-center gap-4'>
-            <Button className='flex items-center justify-center gap-2' variant='gradient' ripple={true} size='sm'>
+            <Button loading={isloading} className='flex items-center justify-center gap-2' variant='gradient' ripple={true} size='sm' onClick={handleLogout}>
               <PowerIcon className='h-4' />
               Log out
             </Button>
