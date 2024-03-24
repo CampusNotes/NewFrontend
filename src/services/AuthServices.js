@@ -53,6 +53,7 @@ async function LogoutService() {
 
     if (response.status === 200) {
       clearStorage();
+      Notify('success', response.data.message);
       return true;
     }
     else {

@@ -4,8 +4,10 @@ import Header from '../components/Header'
 import { Footer } from '../components/Footer'
 import reciept from '../assets/pexels-karolina-grabowska-4959907.jpg'
 import { BeakerIcon, LockClosedIcon } from '@heroicons/react/24/outline'
+import { useNavigate } from 'react-router-dom'
 
 function Home() {
+  const navigate = useNavigate()
   return (
     <>
       <div className=''>
@@ -22,7 +24,7 @@ function Home() {
                 <p className='font-outfit font-light tracking-wider text-center text-sm lg:text-lg'>Billify is an innovative online billing platform designed specifically for restaurant owners. It simplifies the billing process by digitizing and automating every aspect, from order entry to payment collection</p>
               </div>
               <div>
-                <Button variant='gradient'>Get Started !</Button>
+                <Button variant='gradient' onClick={() =>navigate('/register')}>Get Started !</Button>
 
               </div>
             </div>
