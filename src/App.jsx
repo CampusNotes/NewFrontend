@@ -6,6 +6,9 @@ import DashboardLayout from "./layouts/DashboardLayout"
 import Order from "./pages/Order"
 import PageNotFound from "./pages/PageNotFound"
 import PrivateRoutes from "./routes/PrivateRoutes"
+import Catalog from "./pages/Catalog"
+import Profile from "./pages/Profile"
+import Inbox from "./pages/Inbox"
 
 
 function App() {
@@ -19,6 +22,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route element={<PrivateRoutes><DashboardLayout /></PrivateRoutes>}>
           <Route path="/order" element={<Order />} />
+          <Route path="/catalog" element={<Catalog />} />
+          <Route path="/inbox" element={<Inbox/>} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
