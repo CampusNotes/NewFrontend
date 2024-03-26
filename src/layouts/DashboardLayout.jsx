@@ -30,7 +30,7 @@ function DashboardLayout() {
           <div className='fixed hidden lg:block mt-14'>
             <Sidebar />
           </div>
-          <div className='lg:ml-[18rem] w-full pt-28'>
+          <div className='lg:ml-[17rem] w-full pt-28 bg-gray-50'>
             <Outlet />
             <Footer />
           </div>
