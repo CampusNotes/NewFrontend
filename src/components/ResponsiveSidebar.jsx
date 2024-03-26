@@ -18,8 +18,9 @@ import {
   InboxIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { LogoutService } from "../services/AuthServices";
 
 export default function ResponsiveSidebar({
   openDrawer,
@@ -27,6 +28,25 @@ export default function ResponsiveSidebar({
   open
 }) {
   const [active, setActive] = useState(2);
+
+  const [isloading, setIsLoading] = useState(false)
+
+  const navigate = useNavigate()
+
+
+
+  const handleLogout = async () => {
+    try {
+      const isLoggedOut = await LogoutService();
+
+      if (isLoggedOut) {
+        navigate('/')
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  }
 
   return (
     <React.Fragment>
@@ -90,12 +110,14 @@ export default function ResponsiveSidebar({
               Profile
             </ListItem>
           </NavLink>
-
+          <div className='flex items-center juce gap-4 mt-8'>
+            <Button loading={isloading} className='flex items-center justify-center gap-2' variant='gradient' ripple={true} size='sm' onClick={handleLogout} fullWidth>
+              <PowerIcon className='h-4' />
+              Log out
+            </Button>
+          </div>
 
         </List>
-        <Button className="mt-3 ml-5" size="sm">
-          Documentation
-        </Button>
       </Drawer>
     </React.Fragment>
   );

@@ -45,12 +45,12 @@ function DashboardNav() {
         <div className='flex items-center gap-8'>
           <div className="p-2">
             <Input
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+              icon={<MagnifyingGlassIcon className="h-3 lg:h-5 w-3 lg:w-5" />}
               label="Search"
             />
           </div>
           <div className='flex items-center gap-4'>
-            <Button loading={isloading} className='flex items-center justify-center gap-2' variant='gradient' ripple={true} size='sm' onClick={handleLogout}>
+            <Button loading={isloading} className='hidden lg:flex items-center justify-center gap-2 ' variant='gradient' ripple={true} size='sm' onClick={handleLogout}>
               <PowerIcon className='h-4' />
               Log out
             </Button>
