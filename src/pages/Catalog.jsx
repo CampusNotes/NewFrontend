@@ -111,11 +111,11 @@ function Catalog() {
             <section className='mb-12'>
               <header className='flex items-center justify-center'>
                 <h1 className='text-xl lg:text-2xl text-center font-medium text-blue-gray-700 '>
-                  All products in your are here.
+                  All products in your Catalog are here.
                 </h1>
               </header>
-              <div className='overflow-y-auto'>
-                <div className='flex flex-wrap items-center justify-center gap-6 mb-10'>
+              <div className=''>
+                <div className=''>
                   {products.length === 0 ? <>
                     <>
                       {
@@ -135,11 +135,11 @@ function Catalog() {
                         </Typography>
                       }
                     </>
-                  </> : <>
+                  </> : <div className='flex flex-wrap items-center justify-center gap-6 mb-10 h-[50rem] overflow-y-auto pt-4 pb-10'>
                     {
                       products.map((product) => <ProductCard key={product._id} productName={product.productName} productPrice={product.price} productCategory={product.category} />)
                     }
-                  </>}
+                  </div>}
                 </div>
               </div>
             </section>
