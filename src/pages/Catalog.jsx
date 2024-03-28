@@ -67,9 +67,10 @@ function Catalog() {
       auth_token: localStorage.getItem('auth_token')
     }
 
-
+    setProductLoading(true)
     axios.get('/api/product/allproducts', { headers })
       .then((dataN) => {
+
         console.log(dataN.data.data.products);
         const p = dataN.data.data.products || [];
         if (p.length > 0) {
@@ -123,7 +124,7 @@ function Catalog() {
                 </h1>
               </header>
               <div className=''>
-                <div className=''>
+                <div className='flex items-center justify-center'>
                   {products.length === 0 ? <>
                     <>
                       {
