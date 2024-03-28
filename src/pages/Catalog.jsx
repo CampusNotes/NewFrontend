@@ -4,6 +4,7 @@ import { AddProductService, GetAllProducts } from '../services/ProductServices';
 import Notify from '../helpers/Notify';
 import { ProductCard } from '../components/ProductCard';
 import { LoadingSkeleton } from '../components/LoadingSkeleton';
+import axios from 'axios';
 
 function Catalog() {
   const [productName, setProductName] = useState('');
@@ -60,27 +61,50 @@ function Catalog() {
     }
   }
 
-  useEffect(() => {
-    async function getProducts() {
-      try {
-        setProductLoading(true)
-        const res = await GetAllProducts();
-        console.log(res);
-        if (res.length > 0) {
-          setProducts(res);
+  function getProducts() {
+    const headers = {
+      "Content-Type": "application/json",
+      auth_token: localStorage.getItem('auth_token')
+    }
+
+
+    axios.get('/api/product/allproducts', { headers })
+      .then((dataN) => {
+        console.log(dataN.data.data.products);
+        const p = dataN.data.data.products || [];
+        if (p.length > 0) {
+          setProducts(p);
           setProductLoading(false);
         }
         else {
           setProductLoading(false)
         }
-      } catch (error) {
+      })
+      .catch((error) => {
         console.log(error);
         setProductLoading(false)
-      }
-    }
+      })
+
+    // try {
+    //   setProductLoading(true)
+    //   const res = await GetAllProducts();
+    //   console.log(res);
+    //   // if (res.length > 0) {
+    //   //   setProducts(res);
+    //   //   setProductLoading(false);
+    //   // }
+    //   // else {
+    //   //   setProductLoading(false)
+    //   // }
+    // } catch (error) {
+    //   console.log(error);
+    //   setProductLoading(false)
+    // }
+  }
+  useEffect(() => {
 
     getProducts()
-  }, [setUpdateChanges, updateChanges])
+  }, [updateChanges, setUpdateChanges])
   return (
     <>
       <div className=''>

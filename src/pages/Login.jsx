@@ -43,17 +43,19 @@ export function Login() {
         password
       }
       const isLoggedIn = await LoginService(data)
-      
+
       if (isLoggedIn) {
         setIsLoading(false);
         Notify('success', 'Login successfull');
         navigate('/order')
       }
       else {
+
         setIsLoading(false);
       }
     } catch (error) {
-      console.log(error);
+
+
       setIsLoading(false);
     }
 

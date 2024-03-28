@@ -26,7 +26,7 @@ async function LoginService(data) {
     const response = await axios.post('/api/auth/login', data);
     console.log(response);
     if (response.status === 200) {
-      console.log(response);
+
       localStorage.setItem('auth_token', response.data.data.token);
       return true
     }
@@ -35,8 +35,9 @@ async function LoginService(data) {
       return false;
     }
   } catch (error) {
-    console.log(error);
-    throw new Error(error)
+    console.log(error.response.data.message);
+    Notify('error', error.response.data.message);
+    // throw new Error(error)
   }
 }
 
