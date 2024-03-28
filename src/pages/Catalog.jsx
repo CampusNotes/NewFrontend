@@ -84,22 +84,6 @@ function Catalog() {
         console.log(error);
         setProductLoading(false)
       })
-
-    // try {
-    //   setProductLoading(true)
-    //   const res = await GetAllProducts();
-    //   console.log(res);
-    //   // if (res.length > 0) {
-    //   //   setProducts(res);
-    //   //   setProductLoading(false);
-    //   // }
-    //   // else {
-    //   //   setProductLoading(false)
-    //   // }
-    // } catch (error) {
-    //   console.log(error);
-    //   setProductLoading(false)
-    // }
   }
   useEffect(() => {
 

@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const headers = {
   "Content-Type": "application/json",
-  "auth_token": localStorage.getItem('auth_token')
+  auth_token: localStorage.getItem('auth_token')
 }
 
 async function AddProductService(data) {
