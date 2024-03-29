@@ -1,12 +1,13 @@
 import Notify from '../helpers/Notify'
 import axios from 'axios'
 
-const headers = {
-  "Content-Type": "application/json",
-  auth_token: localStorage.getItem('auth_token')
-}
+
 
 async function AddProductService(data) {
+  const headers = {
+    "Content-Type": "application/json",
+    auth_token: localStorage.getItem('auth_token')
+  }
   try {
     const response = await axios.post('/api/product/newproduct', data, { headers })
 
@@ -25,7 +26,11 @@ async function AddProductService(data) {
   }
 }
 
-async function GetAllProducts() {
+async function GetAllProductsService() {
+  const headers = {
+    "Content-Type": "application/json",
+    auth_token: localStorage.getItem('auth_token')
+  }
   try {
     const response = await axios.get('/api/product/allproducts', { headers })
 
@@ -42,7 +47,36 @@ async function GetAllProducts() {
   }
 }
 
+
+async function DeleteProductService(productId) {
+  const headers = {
+    "Content-Type": "application/json",
+    "auth_token": localStorage.getItem('auth_token')
+  }
+  try {
+    console.log(headers);
+    const data = {
+      productId: productId
+    }
+    const response = await axios.post('/api/product/removeproduct', data, { headers })
+
+    console.log(response);
+
+    if (response.status === 200) {
+      return true;
+    }
+    else {
+      return false;
+    }
+
+  } catch (error) {
+    console.log(error);
+    throw new Error(error)
+  }
+}
+
 export {
   AddProductService,
-  GetAllProducts
+  GetAllProductsService,
+  DeleteProductService
 }

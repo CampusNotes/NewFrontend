@@ -1,6 +1,6 @@
 import { Button, Card, Input, Option, Select, Spinner, Typography } from '@material-tailwind/react'
 import React, { useEffect, useState } from 'react'
-import { AddProductService, GetAllProducts } from '../services/ProductServices';
+import { AddProductService, DeleteProductService, GetAllProductsService } from '../services/ProductServices';
 import Notify from '../helpers/Notify';
 import { ProductCard } from '../components/ProductCard';
 import { LoadingSkeleton } from '../components/LoadingSkeleton';
@@ -62,17 +62,12 @@ function Catalog() {
   }
 
   function getProducts() {
-    const headers = {
-      "Content-Type": "application/json",
-      auth_token: localStorage.getItem('auth_token')
-    }
 
     setProductLoading(true)
-    axios.get('/api/product/allproducts', { headers })
-      .then((dataN) => {
+    GetAllProductsService()
+      .then((data) => {
 
-        console.log(dataN.data.data.products);
-        const p = dataN.data.data.products || [];
+        const p = data || [];
         if (p.length > 0) {
           setProducts(p);
           setProductLoading(false);
@@ -86,6 +81,29 @@ function Catalog() {
         setProductLoading(false)
       })
   }
+
+
+  async function removeProduct(e, id) {
+    e.preventDefault();
+    console.log(id);
+
+    DeleteProductService(id)
+      .then((isDeleted) => {
+        if (isDeleted) {
+          Notify('success', 'Product removed successfully');
+          setUpdateChanges((prev) => prev + 1)
+        }
+        else {
+          Notify('error', 'Unable to remove product at the moment')
+          setUpdateChanges((prev) => prev + 1)
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+
+  }
+
   useEffect(() => {
 
     getProducts()
@@ -144,9 +162,9 @@ function Catalog() {
                         </Typography>
                       }
                     </>
-                  </> : <div className='flex flex-wrap items-center justify-center gap-6 mb-10 h-[50rem] overflow-y-auto pt-4 pb-10'>
+                  </> : <div className={`flex flex-wrap items-center justify-center gap-6 mb-10 ${products.length > 10 ? 'h-[50rem] overflow-y-auto' : ''} pt-4 pb-10`}>
                     {
-                      products.map((product) => <ProductCard key={product._id} productName={product.productName} productPrice={product.price} productCategory={product.category} />)
+                      products.map((product) => <ProductCard key={product._id} productName={product.productName} productPrice={product.price} productCategory={product.category} isRemovable={true} remove={(e) => removeProduct(e, product._id)} />)
                     }
                   </div>}
                 </div>
