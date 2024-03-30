@@ -6,16 +6,64 @@ import { ProductCard } from '../components/ProductCard'
 import { LoadingSkeleton } from '../components/LoadingSkeleton'
 import OrderCard from '../components/OrderCard'
 import { TrashIcon } from '@heroicons/react/24/outline'
+import { PlaceOrderService } from '../services/OrderServices'
+import { Qrcode } from '../components/Qrcode'
+import Notify from '../helpers/Notify'
 
 function Order() {
   const [products, setProducts] = useState([])
   const [productLoading, setProductLoading] = useState(false);
   const [currentOrder, setCurrentOrder] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [billId, setBillId] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleOpen = () => setOpen(!open);
+
+  function placeOrder() {
+
+    let temp = [];
+    currentOrder.map(item => {
+      temp = [...temp, { productId: item._id, name: item.productName, quantity: item.count, price: item.total }];
+    })
+
+
+    if (temp.length == 0) {
+      Notify('error', "Please add an item to the order")
+      return
+    }
+
+
+    const data = {
+      products: temp,
+      totalPrice: totalCost,
+    }
+    setIsLoading(true);
+    PlaceOrderService(data)
+      .then((res) => {
+        console.log(res);
+        const billid = res;
+        if (billid) {
+          setBillId(billid);
+          setIsLoading(false);
+        }
+        else {
+          setIsLoading(false);
+        }
+
+      })
+      .catch((err) => {
+        setIsLoading(false)
+        console.log(err);
+      })
+
+  }
 
 
   function clearOrder() {
     setCurrentOrder([]);
+    setBillId('')
     setTotalCost(0);
   }
 
@@ -89,6 +137,7 @@ function Order() {
     <>
       <div>
         <div className='w-full container mx-auto px-4 pb-8'>
+          <Qrcode handleOpen={handleOpen} open={open} billId={billId} />
           <div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
             <div className='md:col-span-2 order-2 md:order-1'>
               <div className='px-8 mb-10'>
@@ -162,8 +211,15 @@ function Order() {
                     <div><h5 className='text-xl text-red-500'>{totalCost}</h5></div>
                     <div><h5 className='text-xl font-medium text-black'>Rs.</h5></div>
                   </div>
-                  <div>
-                    <Button variant='gradient' size='lg' fullWidth color='green'>Place Order</Button>
+                  <div className='flex flex-col justify-center gap-3'>
+                    <Button loading={isLoading} variant='gradient' size='lg' fullWidth color='green'
+                      onClick={placeOrder}
+                    >Place Order</Button>
+                    {
+                      billId ? <Button onClick={handleOpen} variant="gradient">
+                        Generate QR
+                      </Button> : ''
+                    }
                   </div>
                 </CardFooter>
               </Card>
