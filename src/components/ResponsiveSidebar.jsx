@@ -91,15 +91,13 @@ export default function ResponsiveSidebar({
               Order
             </ListItem>
           </NavLink>
-          <NavLink to={'/inbox'} className={({ isActive }) => (isActive ? setActive(3) : null)}>
+          <NavLink to={'/bills'} className={({ isActive }) => (isActive ? setActive(3) : null)}>
             <ListItem selected={active == 3 ? true : false}>
               <ListItemPrefix>
                 <InboxIcon className="h-5 w-5" />
               </ListItemPrefix>
-              Inbox
-              <ListItemSuffix>
-                <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
-              </ListItemSuffix>
+              Bills
+
             </ListItem>
           </NavLink>
           <NavLink to={'/profile'} className={({ isActive }) => (isActive ? setActive(4) : null)}>

@@ -25,6 +25,29 @@ async function PlaceOrderService(data) {
 }
 
 
+async function GetAllBills() {
+  const headers = {
+    "Content-Type": "application/json",
+    auth_token: localStorage.getItem('auth_token')
+  }
+
+  try {
+    const response = await axios.get('/api/bill/allbills', { headers });
+
+    if (response.status === 200) {
+      return response.data.data.bills;
+    }
+    else {
+      return [];
+    }
+
+  } catch (error) {
+    console.log(error);
+    throw new Error(error)
+  }
+}
+
 export {
-  PlaceOrderService
+  PlaceOrderService,
+  GetAllBills
 }
