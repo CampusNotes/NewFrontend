@@ -2,18 +2,24 @@ import { MinusIcon, PlusCircleIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { Button, Card, CardBody, CardFooter, CardHeader, Chip } from '@material-tailwind/react'
 import React from 'react'
 
-function OrderCard() {
+function OrderCard({
+  name,
+  price,
+  quantity,
+  add = () => { },
+  remove = () => { }
+}) {
   return (
     <>
-      <Card floated={false} className='px-4 py-4 rounded-md'>
+      <Card className='px-4 py-4 rounded-md'>
         <div className='flex items-center justify-between px-3 pb-4'>
-          <div>Name</div>
-          <div>price</div>
+          <div>{name}</div>
+          <div>{price}</div>
         </div>
         <div className='flex items-center justify-center gap-2 lg:gap-4'>
-          <Button variant='text' size='sm' color=''><PlusIcon className='h-5 w-5' /></Button>
-          <Chip variant="gradient" value={6} size="sm" className='px-4' />
-          <Button variant='text' size='sm' color=''><MinusIcon className='h-5 w-5' /></Button>
+          <button onClick={add}><PlusIcon className='h-5 w-5' /></button>
+          <Chip variant="gradient" value={quantity} size="sm" className='px-4' />
+          <button onClick={remove}><MinusIcon className='h-5 w-5' /></button>
         </div>
       </Card>
     </>
