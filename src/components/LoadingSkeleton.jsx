@@ -1,6 +1,6 @@
 import { Typography } from "@material-tailwind/react";
 
-export function LoadingSkeleton() {
+export default function LoadingSkeleton() {
   return (
     <div className="max-w-full animate-pulse">
       <Typography

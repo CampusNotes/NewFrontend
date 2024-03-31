@@ -3,8 +3,10 @@ import Dropzone from '../components/Dropzone';
 import { Button, Input, Option, Select, Typography } from '@material-tailwind/react';
 import { CloudArrowUpIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
+
 import Notify from '../helpers/Notify';
 import NotesCard from '../components/NotesCard';
+import LoadingSkeleton from '../components/LoadingSkeleton';
 
 function Notes() {
   const [branch, setBranch] = useState("");
@@ -14,6 +16,7 @@ function Notes() {
   const [file, setFile] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState([]);
+  const [filesLoaded, setFilesLoaded] = useState(false);
 
   function clearData() {
     setBranch('')
@@ -68,6 +71,7 @@ function Notes() {
       "Content-Type": "application/json",
       auth_token: localStorage.getItem('auth_token')
     }
+    setFilesLoaded(true)
     axios.get('/api/file/allfiles', { headers })
       .then(res => {
         console.log(res);
@@ -77,9 +81,11 @@ function Notes() {
         else {
           setData([])
         }
+        setFilesLoaded(false)
       })
       .catch(error => {
         console.log(error);
+        setFilesLoaded(false)
       })
   }, [])
 
@@ -141,17 +147,32 @@ function Notes() {
             </header>
             <div className={`flex flex-col w-full items-center justify-center gap-6 mb-10 ${data.length > 5 ? 'h-[50rem] overflow-y-auto' : ''} px-8 pt-80 pb-10`}>
               {
-                data.length > 0 ? <>
+                !filesLoaded ? <>
                   {
-                    data.map(item => (
-                      <NotesCard key={item._id}
-                        item={item}
+                    data.length > 0 ? <>
+                      {
+                        data.map(item => (
+                          <NotesCard key={item._id}
+                            item={item}
 
-                      />))
+                          />))
+                      }
+                    </> : <Typography variant="h5" color="gray" className="mt-10 font-light">
+                      No notes added yet....
+                    </Typography>
                   }
-                </> : <Typography variant="h5" color="gray" className="mt-10 font-light">
-                  No notes added yet....
-                </Typography>
+                </> : <>
+                  <div className='flex flex-col w-full items-center justify-center gap-6 mt-10'>
+                    <LoadingSkeleton />
+                    <LoadingSkeleton />
+                    <LoadingSkeleton />
+                    <LoadingSkeleton />
+                    <LoadingSkeleton />
+                    <LoadingSkeleton />
+                    <LoadingSkeleton />
+
+                  </div>
+                </>
               }
             </div>
           </section>
