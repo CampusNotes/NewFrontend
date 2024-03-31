@@ -47,7 +47,7 @@ export function Login() {
       if (isLoggedIn) {
         setIsLoading(false);
         Notify('success', 'Login successfull');
-        navigate('/order')
+        navigate('/notes')
       }
       else {
 
@@ -79,7 +79,7 @@ export function Login() {
               href="/"
               className="mr-4 text-white cursor-pointer py-1.5 font-outfit font-bold text-4xl tracking-wider"
             >
-              Billify
+              CampusNotes
             </Typography>
           </div>
           <div className="flex items-center justify-center order-2">

@@ -75,35 +75,18 @@ export default function ResponsiveSidebar({
         </div>
 
         <List>
-          <NavLink to={'/catalog'} className={({ isActive }) => (isActive ? setActive(1) : null)}>
+          <NavLink to={'/notes'} className={({ isActive }) => (isActive ? setActive(1) : null)}>
             <ListItem selected={active == 1 ? true : false}>
               <ListItemPrefix>
                 <PresentationChartBarIcon className="h-5 w-5" />
               </ListItemPrefix>
-              Catalog
+              Notes
             </ListItem>
           </NavLink>
-          <NavLink to='/order' className={({ isActive }) => (isActive ? setActive(2) : null)}>
+          <NavLink to={'/profile'} className={({ isActive }) => (isActive ? setActive(2) : null)}>
             <ListItem selected={active == 2 ? true : false}>
               <ListItemPrefix>
-                <ShoppingBagIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Order
-            </ListItem>
-          </NavLink>
-          <NavLink to={'/bills'} className={({ isActive }) => (isActive ? setActive(3) : null)}>
-            <ListItem selected={active == 3 ? true : false}>
-              <ListItemPrefix>
-                <InboxIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Bills
-
-            </ListItem>
-          </NavLink>
-          <NavLink to={'/profile'} className={({ isActive }) => (isActive ? setActive(4) : null)}>
-            <ListItem selected={active == 4 ? true : false}>
-              <ListItemPrefix>
-                <UserCircleIcon className="h-5 w-5" />
+                <PresentationChartBarIcon className="h-5 w-5" />
               </ListItemPrefix>
               Profile
             </ListItem>

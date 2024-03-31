@@ -2,7 +2,7 @@ import { Button } from '@material-tailwind/react'
 import React from 'react'
 import Header from '../components/Header'
 import { Footer } from '../components/Footer'
-import reciept from '../assets/pexels-karolina-grabowska-4959907.jpg'
+import reciept from '../assets/david-travis-5bYxXawHOQg-unsplash.jpg'
 import { BeakerIcon, LockClosedIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
 
@@ -17,14 +17,14 @@ function Home() {
             <div className='container mx-auto flex flex-col items-center justify-center gap-8 px-8 py-12'>
               <div>
                 <h1 className='text-4xl lg:text-5xl font-extrabold font-outfit bg-gradient-to-br from-gray-900 via-gray-700 to-gray-600 inline-block py-4 text-transparent bg-clip-text text-center tracking-wider'>
-                  Streamline Your Restaurant&apos;s Billing Process with Billify
+                  Share. Learn. Succeed
                 </h1>
               </div>
               <div className='mt-4'>
-                <p className='font-outfit font-light tracking-wider text-center text-sm lg:text-lg'>Billify is an innovative online billing platform designed specifically for restaurant owners. It simplifies the billing process by digitizing and automating every aspect, from order entry to payment collection</p>
+                <p className='font-outfit font-light tracking-wider text-center text-sm lg:text-lg'>Stop wasting time searching for handwritten notes or relying on unreliable sources. CampusNotes connects you to a collaborative network of classmates, offering a treasure trove of organized and comprehensive notes for all your courses.</p>
               </div>
               <div>
-                <Button variant='gradient' onClick={() =>navigate('/register')}>Get Started !</Button>
+                <Button variant='gradient' onClick={() => navigate('/register')}>Get Started !</Button>
 
               </div>
             </div>
@@ -35,11 +35,12 @@ function Home() {
                 <div className='flex flex-col lg:flex-row'>
                   <div className='w-full lg:w-[60%]'>
                     <h2 className='text-white text-xl font-outfit font-semibold tracking-wider uppercase'>
-                      Effortless Bill Creation
+                      Effortless Notes Searching
                     </h2>
                     <ul className='mt-4'>
-                      <li className='text-white font-outfit font-light tracking-wide'>Quickly generate bills with a few clicks.</li>
-                      <li className='text-white font-outfit font-light tracking-wide'>Input order details seamlessly for accurate billing.</li>
+                      <li className='text-white font-outfit font-light tracking-wide'>Find course-specific notes with keywords & context.</li>
+                      <li className='text-white font-outfit font-light tracking-wide'> Refine results by professor, type, or ratings for perfect notes.
+                      </li>
                     </ul>
                   </div>
                   <div className='w-full hidden lg:block lg:w-[40%]  relative overflow-hidden bg-cover bg-no-repeat'>
@@ -65,19 +66,18 @@ function Home() {
 
 
                   <h2 className='text-white text-xl font-outfit font-semibold tracking-wider uppercase'>
-                    Effortless Bill Creation
+                    Collaboration and Sharing
                   </h2>
                   <div className='mt-4'>
                     <p className='text-white font-outfit font-light text-lg text-center tracking-wider'>
-                      Access Billify from any device with an internet connection.
-                      Manage billing operations both on-site and remotely for convenience.
+                      CampusNotes goes beyond note-sharing. Upload your organized notes to become a study hero, collaborate with classmates in real-time to create the ultimate study guide (if available), and spark discussions on course topics through interactive forums, fostering a supportive learning environment for everyone.
                     </p>
                   </div>
 
 
                 </div>
                 <div className='bg-black rounded-xl p-6 flex items-center justify-center'>
-                  <h2 className='text-white text-2xl md:text-3xl lg:text-4xl font-outfit font-semibold tracking-wider capitalize'>QR code accessible bills</h2>
+                  <h2 className='text-white text-2xl md:text-3xl lg:text-4xl font-outfit font-semibold tracking-wider capitalize'>Boosting Your Learning</h2>
                 </div>
                 <div className='bg-black rounded-xl p-6 flex flex-col gap-4'>
                   <h2 className='text-white text-xl font-outfit font-semibold tracking-wider capitalize'>Want to know more</h2>

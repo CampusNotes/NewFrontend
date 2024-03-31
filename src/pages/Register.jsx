@@ -54,12 +54,12 @@ export function Register() {
         password
       }
       const isRegistered = await RegisterService(data);
-      if(isRegistered){
+      if (isRegistered) {
         setIsLoading(false);
-        Notify('success','Registeration successfull');
-        navigate('/order')
+        Notify('success', 'Registeration successfull');
+        navigate('/notes')
       }
-      else{
+      else {
         setIsLoading(false);
       }
     } catch (error) {
@@ -86,7 +86,7 @@ export function Register() {
               href="/"
               className="mr-4 text-white cursor-pointer py-1.5 font-outfit font-bold text-4xl tracking-wider"
             >
-              Billify
+              CampusNotes
             </Typography>
           </div>
           <div className="flex items-center justify-center ">

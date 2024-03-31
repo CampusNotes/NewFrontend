@@ -9,11 +9,9 @@ import ResponsiveSidebar from './ResponsiveSidebar'
 
 
 function DashboardNav() {
-  const [isloading, setIsLoading] = useState(false)
+  const [isloading, setIsLoading] = useState(false);
 
-  const navigate = useNavigate()
-
-
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {

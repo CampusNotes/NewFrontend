@@ -82,7 +82,7 @@ export default function Header() {
             href="#"
             className="mr-4 cursor-pointer py-1.5 font-outfit font-bold text-2xl tracking-wider"
           >
-            Billify
+            CampusNotes
           </Typography>
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">{navList}</div>
@@ -110,7 +110,7 @@ export default function Header() {
                     variant="gradient"
                     size="sm"
                     className="hidden lg:inline-block"
-                    onClick={() => navigate('/order')}
+                    onClick={() => navigate('/notes')}
                   >
                     <span>Dashboard</span>
                   </Button>
@@ -178,7 +178,7 @@ export default function Header() {
                   <span>Sign in</span>
                 </Button>
               </> : <>
-                <Button fullWidth variant="gradient" size="sm" className="" onClick={() => navigate('/order')}>
+                <Button fullWidth variant="gradient" size="sm" className="" onClick={() => navigate('/notes')}>
                   <span>Dashboard</span>
                 </Button>
                 <Button fullWidth variant="gradient" color="red" size="sm" className="" onClick={handleLogout}>

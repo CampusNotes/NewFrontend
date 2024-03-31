@@ -7,7 +7,7 @@ async function RegisterService(data) {
     const response = await axios.post('/api/auth/register', data);
     if (response.status === 201) {
       console.log(response);
-      localStorage.setItem('auth_token', response.data.data.token);
+      localStorage.setItem('auth_token', response.data.data.auth_token.token);
 
       return true;
     }
@@ -27,7 +27,7 @@ async function LoginService(data) {
     console.log(response);
     if (response.status === 200) {
 
-      localStorage.setItem('auth_token', response.data.data.token);
+      localStorage.setItem('auth_token', response.data.data.auth_token.token);
       return true
     }
     else {
