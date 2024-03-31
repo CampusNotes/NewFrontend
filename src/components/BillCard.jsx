@@ -1,6 +1,8 @@
 import { ChevronDownIcon, CloudArrowDownIcon } from '@heroicons/react/24/solid';
 import { Accordion, AccordionBody, AccordionHeader, Button, Card, CardBody, CardFooter, CardHeader, Chip, Tooltip, Typography } from '@material-tailwind/react'
+import axios from 'axios';
 import React, { useState } from 'react'
+import download from 'downloadjs'
 
 function Icon({ open }) {
   return (
@@ -20,17 +22,41 @@ function Icon({ open }) {
 function BillCard({
   billId,
   products = [],
-  totalPrice
+  totalPrice,
+  date
 }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
 
+  function downloadBill() {
+    axios.get(`http://localhost:8000/api/bill/getbill/${billId}`, {
+      responseType: 'blob'
+    })
+      .then(response => {
+        const content = response.headers['content-type'];
+        download(response.data, `bill-${billId}.pdf`, content)
+      })
+      .catch(err => console.log(err))
+  }
+
   return (
     <>
       <Card className='w-full p-2'>
-        <CardHeader shadow={false} floated={false} className='flex items-center gap-4'>
-          <Typography variant='h4' className='text-black font-bold uppercase' textGradient>Bill Id :</Typography>
-          <Typography variant='h6' className='text-gray-600 font-medium' textGradient>{billId}</Typography>
+        <CardHeader shadow={false} floated={false} className=''>
+          <div className='flex items-center gap-4'>
+            <Typography variant='h4' className='text-black font-bold uppercase' textGradient>Bill Id :</Typography>
+            <Typography variant='h6' className='text-gray-600 font-medium' textGradient>{billId}</Typography>
+          </div>
+          <div className='flex flex-col lg:flex-row lg:items-center gap-2 lg:justify-between'>
+            <div className='flex items-center gap-4'>
+              <Typography variant='h6' className='text-black font-bold uppercase' textGradient>Date :</Typography>
+              <Typography variant='h6' className='text-gray-600 font-medium' textGradient>{new Date(date).toISOString().split('T')[0]}</Typography>
+            </div>
+            <div className='flex items-center gap-4'>
+              <Typography variant='h6' className='text-black font-bold uppercase' textGradient>Date :</Typography>
+              <Typography variant='h6' className='text-gray-600 font-medium' textGradient>{new Date(date).toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' })}</Typography>
+            </div>
+          </div>
         </CardHeader>
         <CardBody>
           <Tooltip content="Click to view items" placement="top" className="bg-gray-600" animate={{
@@ -100,7 +126,7 @@ function BillCard({
                     }
                   </tbody>
                 </table>
-                <Button variant="gradient" className="flex items-center justify-center gap-3" fullWidth>
+                <Button variant="gradient" className="flex items-center justify-center gap-3" fullWidth onClick={downloadBill} >
                   <CloudArrowDownIcon className='h-5 w-5' />
                   Download Bill
                 </Button>

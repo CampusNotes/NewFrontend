@@ -18,6 +18,7 @@ function Order() {
   const [open, setOpen] = useState(false);
   const [billId, setBillId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [query, setQuery] = useState('');
 
   const handleOpen = () => setOpen(!open);
 
@@ -144,6 +145,8 @@ function Order() {
                 <Input
                   icon={<MagnifyingGlassIcon className="h-3 lg:h-5 w-3 lg:w-5" />}
                   label="Search Product"
+                  placeholder='Enter the name of a product'
+                  onChange={(e) => setQuery(e.target.value)}
                 />
               </div>
               <div>
@@ -168,7 +171,9 @@ function Order() {
                   </>
                 </> : <div className={`flex flex-wrap items-center justify-center gap-6 mb-10 ${products.length > 10 ? 'h-[50rem] overflow-y-auto' : ''} pt-4 pb-10`}>
                   {
-                    products.map((product) => <ProductCard key={product._id} productName={product.productName} productPrice={product.price} productCategory={product.category} isAddable={true} add={(e) => addProduct(e, product)} />)
+                    products.filter(item => {
+                      return query.toLowerCase() === '' ? item : item.productName.toLowerCase().includes(query.toLowerCase())
+                    }).map((product) => <ProductCard key={product._id} productName={product.productName} productPrice={product.price} productCategory={product.category} isAddable={true} add={(e) => addProduct(e, product)} />)
                   }
                 </div>}
               </div>

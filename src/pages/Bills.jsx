@@ -66,7 +66,7 @@ function Bills() {
               </> : <div className={`flex flex-wrap items-center justify-center gap-6 mb-10 ${bills.length > 10 ? 'h-[50rem] overflow-y-auto' : ''} px-8 pt-4 pb-10`}>
                 {
                   bills.map(bill => (<>
-                    <BillCard key={bill._id} billId={bill.BillId} totalPrice={bill.totalPrice} products={bill.products} />
+                    <BillCard key={bill._id} billId={bill.BillId} totalPrice={bill.totalPrice} products={bill.products} date={bill.createdAt} />
                   </>))
                 }
               </div>}
