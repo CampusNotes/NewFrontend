@@ -217,7 +217,7 @@ function Order() {
                     <div><h5 className='text-xl font-medium text-black'>Rs.</h5></div>
                   </div>
                   <div className='flex flex-col justify-center gap-3'>
-                    <Button loading={isLoading} variant='gradient' size='lg' fullWidth color='green'
+                    <Button disabled={currentOrder.length == 0 ? true : false} loading={isLoading} variant='gradient' size='lg' fullWidth color='green'
                       onClick={placeOrder}
                     >Place Order</Button>
                     {
