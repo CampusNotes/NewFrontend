@@ -27,9 +27,10 @@ function BillCard({
 }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
+  const url = import.meta.env.VITE_BACKEND_URL;
 
   function downloadBill() {
-    axios.get(`http://localhost:8000/api/bill/getbill/${billId}`, {
+    axios.get(`${url}/api/bill/getbill/${billId}`, {
       responseType: 'blob'
     })
       .then(response => {

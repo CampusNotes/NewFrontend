@@ -48,7 +48,7 @@ function Bills() {
                 <>
                   {
                     isLoading ? <>
-                      <div className='flex flex-wrap items-center justify-center gap-6 mt-10'>
+                      <div className='flex flex-col w-full items-center justify-center gap-6 mt-10'>
                         <LoadingSkeleton />
                         <LoadingSkeleton />
                         <LoadingSkeleton />

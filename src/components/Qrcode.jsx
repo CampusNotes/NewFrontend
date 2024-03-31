@@ -9,20 +9,22 @@ import {
 import { QRCodeSVG } from 'qrcode.react';
 import { NavLink } from "react-router-dom";
 
+
 export function Qrcode({
   open,
   handleOpen,
   billId
 }) {
 
+  const url = import.meta.env.VITE_BACKEND_URL;
 
   return (
     <>
       <Dialog open={open} handler={handleOpen}>
         <DialogHeader>Scan QR Code</DialogHeader>
         <DialogBody className="flex flex-col items-center justify-center">
-          <QRCodeSVG value={`http://localhost:8000/api/bill/getbill/${billId}`} />
-          <h4>http://localhost:8000/api/bill/getbill/{billId}</h4>
+          <QRCodeSVG value={`${url}/api/bill/getbill/${billId}`} />
+          {/* <h4>http://localhost:8000/api/bill/getbill/{billId}</h4> */}
         </DialogBody>
         <DialogFooter>
           <Button
