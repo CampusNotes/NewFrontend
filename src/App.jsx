@@ -14,6 +14,8 @@ import PreLoader from "./components/PreLoader"
 import Notes from "./pages/Notes"
 import ViewNotes from "./pages/ViewNotes"
 
+import Chat from "./pages/Chat"
+
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -41,6 +43,7 @@ function App() {
               <Route path="/notes" element={<Notes />} />
               <Route path="/viewnotes" element={<ViewNotes />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/Chat" element={<Chat />} />
             </Route>
             <Route path="*" element={<PageNotFound />} />
           </Routes>

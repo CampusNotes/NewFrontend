@@ -56,6 +56,15 @@ export default function Sidebar() {
           </ListItem>
         </NavLink>
 
+        <NavLink to={'/Chat'} className={({ isActive }) => (isActive ? setActive(4) : null)}>
+          <ListItem selected={active == 4 ? true : false}>
+            <ListItemPrefix>
+              <PresentationChartBarIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Chat
+          </ListItem>
+        </NavLink>
+
 
       </List>
     </Card>

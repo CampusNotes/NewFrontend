@@ -8,7 +8,8 @@ async function RegisterService(data) {
     if (response.status === 201) {
       console.log(response);
       localStorage.setItem('auth_token', response.data.data.auth_token.token);
-
+      localStorage.setItem('user_id', response.data.data.user_id);
+      
       return true;
     }
     else {
@@ -28,6 +29,7 @@ async function LoginService(data) {
     if (response.status === 200) {
 
       localStorage.setItem('auth_token', response.data.data.auth_token.token);
+      localStorage.setItem('user_id', response.data.data.user_id);
       return true
     }
     else {
