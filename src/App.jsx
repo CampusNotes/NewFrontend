@@ -12,6 +12,7 @@ import Profile from "./pages/Profile"
 import { useEffect, useState } from "react"
 import PreLoader from "./components/PreLoader"
 import Notes from "./pages/Notes"
+import ViewNotes from "./pages/ViewNotes"
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route element={<PrivateRoutes><DashboardLayout /></PrivateRoutes>}>
               <Route path="/notes" element={<Notes />} />
+              <Route path="/viewnotes" element={<ViewNotes />} />
               <Route path="/profile" element={<Profile />} />
             </Route>
             <Route path="*" element={<PageNotFound />} />

@@ -36,8 +36,7 @@ function NotesCard({
         <CardBody>
           <table className='w-full min-w-max table-auto text-left mb-4'>
             <thead>
-
-              <tr>
+              <tr className='w-full'>
                 <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                   <Typography
                     variant="small"

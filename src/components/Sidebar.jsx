@@ -47,6 +47,15 @@ export default function Sidebar() {
           </ListItem>
         </NavLink>
 
+        <NavLink to={'/viewnotes'} className={({ isActive }) => (isActive ? setActive(3) : null)}>
+          <ListItem selected={active == 3 ? true : false}>
+            <ListItemPrefix>
+              <PresentationChartBarIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Search Notes
+          </ListItem>
+        </NavLink>
+
 
       </List>
     </Card>

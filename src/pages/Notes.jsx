@@ -8,6 +8,7 @@ import Notify from '../helpers/Notify';
 import NotesCard from '../components/NotesCard';
 import LoadingSkeleton from '../components/LoadingSkeleton';
 
+
 function Notes() {
   const [branch, setBranch] = useState("");
   const [semester, setSemester] = useState("");
@@ -74,7 +75,7 @@ function Notes() {
     setFilesLoaded(true)
     axios.get('/api/file/allfiles', { headers })
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.status === 200) {
           setData(res.data.data.files)
         }
@@ -87,6 +88,7 @@ function Notes() {
         console.log(error);
         setFilesLoaded(false)
       })
+
   }, [])
 
   return (
@@ -145,6 +147,7 @@ function Notes() {
                 All your uploaded notes are here.
               </h1>
             </header>
+
             <div className={`flex flex-col w-full items-center justify-center gap-6 mb-10 ${data.length > 5 ? 'h-[50rem] overflow-y-auto' : ''} px-8 pt-80 pb-10`}>
               {
                 !filesLoaded ? <>

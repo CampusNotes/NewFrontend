@@ -91,6 +91,14 @@ export default function ResponsiveSidebar({
               Profile
             </ListItem>
           </NavLink>
+          <NavLink to={'/viewnotes'} className={({ isActive }) => (isActive ? setActive(3) : null)}>
+            <ListItem selected={active == 3 ? true : false}>
+              <ListItemPrefix>
+                <PresentationChartBarIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              Search Notes
+            </ListItem>
+          </NavLink>
           <div className='flex items-center juce gap-4 mt-8'>
             <Button loading={isloading} className='flex items-center justify-center gap-2' variant='gradient' ripple={true} size='sm' onClick={handleLogout} fullWidth>
               <PowerIcon className='h-4' />
