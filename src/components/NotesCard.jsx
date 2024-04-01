@@ -79,26 +79,29 @@ function NotesCard({
               </tr>
             </thead>
             <tbody>
-              <td className="p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
-                  {item.branch}
-                </Typography>
-              </td>
-              <td className="p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
-                  {item.subject}
-                </Typography>
-              </td>
-              <td className="p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
-                  {item.semester}
-                </Typography>
-              </td>
-              <td className="p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
-                  {item.publicationName}
-                </Typography>
-              </td>
+              <tr className="even:bg-blue-gray-50/50">
+
+                <td className="p-4">
+                  <Typography variant="small" color="blue-gray" className="font-normal">
+                    {item.branch}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Typography variant="small" color="blue-gray" className="font-normal">
+                    {item.subject}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Typography variant="small" color="blue-gray" className="font-normal">
+                    {item.semester}
+                  </Typography>
+                </td>
+                <td className="p-4">
+                  <Typography variant="small" color="blue-gray" className="font-normal">
+                    {item.publicationName}
+                  </Typography>
+                </td>
+              </tr>
             </tbody>
           </table>
         </CardBody>

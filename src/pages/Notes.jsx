@@ -7,6 +7,7 @@ import axios from 'axios';
 import Notify from '../helpers/Notify';
 import NotesCard from '../components/NotesCard';
 import LoadingSkeleton from '../components/LoadingSkeleton';
+import { GetAllFilterService } from '../services/FilterService';
 
 
 function Notes() {
@@ -18,6 +19,7 @@ function Notes() {
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState([]);
   const [filesLoaded, setFilesLoaded] = useState(false);
+  const [filterData, setFilterData] = useState([]);
 
   function clearData() {
     setBranch('')
@@ -27,8 +29,34 @@ function Notes() {
     setFile([])
   }
 
+  function handleBranchChange(val) {
+    setBranch(val);
+
+  }
+
+  const branchData = filterData.find(item => item.branch === branch) || [];
+
+  let subjects = [];
+  let semData = 0
+  if (branchData.length != 0 && semester) {
+    semData = Object.keys(branchData.sem).find(item => item === semester)
+
+    const l = Object.entries(branchData.sem)
+    l.map(item => {
+      if (item[0] == semData) {
+        subjects = [...Object.values(item[1])[0]]
+      }
+    })
+
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (!branch || !semester || !publication || !subject || !file[0]) {
+      Notify('error', 'Please enter all details');
+      return
+    }
 
     const fromdata = new FormData();
     fromdata.append('branch', branch)
@@ -36,6 +64,7 @@ function Notes() {
     fromdata.append('subject', subject)
     fromdata.append('publicationName', publication)
     fromdata.append('file', file[0])
+
     const headers = {
       "Content-Type": "multipart/form-data",
       auth_token: localStorage.getItem('auth_token')
@@ -89,6 +118,18 @@ function Notes() {
         setFilesLoaded(false)
       })
 
+
+    GetAllFilterService()
+      .then(res => {
+        console.log(res);
+        if (res.length != 0) {
+          setFilterData(res)
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      })
+
   }, [])
 
   return (
@@ -105,27 +146,27 @@ function Notes() {
             <form className='mt-16 mb-28  max-w-screen-lg w-full sm:w-96 ' onSubmit={(e) => handleSubmit(e)}>
               <div className='flex flex-col gap-6'>
 
-                <Select variant='standard' size='lg' color='gray' label='Branch' value={branch} onChange={(val) => setBranch(val)}>
-                  <Option value='Computer_Science'>Computer_Science</Option>
-                  <Option value='Information_Technology'>Information_Technology</Option>
-                  <Option value='Electronics&Telecommunication'>Electronics&Telecommunication</Option>
-                </Select>
-                <Select variant='standard' size='lg' color='gray' label='Semester' value={semester} onChange={(val) => setSemester(val)}>
-                  <Option value='1'>1</Option>
-                  <Option value='2'>2</Option>
-                  <Option value='3'>3</Option>
-                  <Option value='4'>4</Option>
-                  <Option value='5'>5</Option>
-                  <Option value='6'>6</Option>
-                  <Option value='7'>7</Option>
+                <Select variant='standard' size='lg' color='gray' label='Branch' onChange={(val) => handleBranchChange(val)} >
+                  {
+                    filterData.map(item => (
+                      <Option key={item._id} value={`${item.branch}`}>{item.branch}</Option>
+                    ))
 
+                  }
                 </Select>
-                <Select variant='standard' size='lg' color='gray' label='Subject' value={subject} onChange={(val) => setSubject(val)}>
-                  <Option value='ML'>ML</Option>
-                  <Option value='CNS'>CNS</Option>
-                  <Option value='DBMS'>DBMS</Option>
-                  <Option value='CC'>CC</Option>
-                  <Option value='WAD'>WAD</Option>
+                <Select variant='standard' size='lg' color='gray' label='Semester' onChange={(val) => setSemester(val)}>
+                  {
+                    branchData.length != 0 ? Object.keys(branchData.sem).map((item) => (
+                      <Option key={item} value={item}>{item}</Option>
+                    )) : <Option disabled>First select a branch</Option>
+                  }
+                </Select>
+                <Select variant='standard' size='lg' color='gray' label='subject' onChange={(val) => setSubject(val)}>
+                  {
+                    branchData.length != 0 && semData != 0 && subjects.length != 0 ? subjects.map((item, i) => (
+                      <Option key={i} value={item}>{item}</Option>
+                    )) : <Option disabled>First select a semester</Option>
+                  }
                 </Select>
                 <Input variant='standard' size='lg' color='gray' label='Publication' placeholder='eg. Decode' className='' onChange={(e) => setPublication(e.target.value)} value={publication} />
                 <div className='flex flex-col justify-center gap-1'>
@@ -148,7 +189,7 @@ function Notes() {
               </h1>
             </header>
 
-            <div className={`flex flex-col w-full items-center justify-center gap-6 mb-10 ${data.length > 5 ? 'h-[50rem] overflow-y-auto' : ''} px-8 pt-80 pb-10`}>
+            <div className={`flex flex-col w-full items-center justify-center gap-6 mb-10 ${data.length > 5 ? 'h-[50rem] overflow-y-auto' : ''} px-8 pt-8 pb-10`}>
               {
                 !filesLoaded ? <>
                   {
@@ -160,7 +201,7 @@ function Notes() {
 
                           />))
                       }
-                    </> : <Typography variant="h5" color="gray" className="mt-10 font-light">
+                    </> : <Typography variant="h5" color="gray" className="mt-10 mb-10 font-light">
                       No notes added yet....
                     </Typography>
                   }

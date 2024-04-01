@@ -36,7 +36,7 @@ function DashboardNav() {
             href="/"
             className="mr-4 cursor-pointer py-1.5 font-outfit font-bold text-2xl tracking-wider"
           >
-            Billify
+            CampusNotes
           </Typography>
         </div>
 
