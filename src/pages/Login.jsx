@@ -5,7 +5,7 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import RegisterImage from '../assets/Order food-bro.svg'
+import RegisterImage from '../assets/Notes-bro (1).svg'
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import validator from "validator";
