@@ -189,7 +189,7 @@ function Notes() {
               </h1>
             </header>
 
-            <div className={`flex flex-col w-full items-center justify-center gap-6 mb-10 ${data.length > 5 ? 'h-[50rem] overflow-y-auto' : ''} px-8 pt-8 pb-10`}>
+            <div className={`flex flex-col w-full items-center justify-center gap-6 mb-10 ${data.length > 5 ? 'h-[50rem] overflow-y-auto ' : ''} px-8 pt-80 pb-10`}>
               {
                 !filesLoaded ? <>
                   {
