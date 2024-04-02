@@ -104,7 +104,7 @@ function Notes() {
     setFilesLoaded(true)
     axios.get('/api/file/allfiles', { headers })
       .then(res => {
-        // console.log(res);
+        console.log(res);
         if (res.status === 200) {
           setData(res.data.data.files)
         }
@@ -121,7 +121,7 @@ function Notes() {
 
     GetAllFilterService()
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.length != 0) {
           setFilterData(res)
         }

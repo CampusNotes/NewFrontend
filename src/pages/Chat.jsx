@@ -20,25 +20,25 @@ function Chat() {
     const [messages, setMessages] = useState([]);
 
 
-    useEffect(() => {
-        // Listen for new messages from the server
+    // useEffect(() => {
+    //     // Listen for new messages from the server
     
-        socket.on('newMessage', (messageData) => {
-            console.log(messageData);
-        //   setMessages(messageData);
-        });
+    //     socket.on('newMessage', (messageData) => {
+    //         console.log(messageData);
+    //     //   setMessages(messageData);
+    //     });
     
-        // return () => {
-        //   socket.disconnect();
-        // };
-      }, [messages]);
+    //     // return () => {
+    //     //   socket.disconnect();
+    //     // };
+    //   }, [messages]);
     
-      const sendMessage = () => {
-        // Emit the message to the server
-        console.log(message);
-        socket.emit('sendMessage', { text: message,user_id:"6609719397af3b3096429c7b" });
-        setMessage('');
-      };
+    //   const sendMessage = () => {
+    //     // Emit the message to the server
+    //     console.log(message);
+    //     socket.emit('sendMessage', { text: message,user_id:"6609719397af3b3096429c7b" });
+    //     setMessage('');
+    //   };
     return(<>
         <div>
           <div className='container mx-auto px-4'>

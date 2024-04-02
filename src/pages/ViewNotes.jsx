@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import Filters from '../components/Filters';
 import axios from 'axios';
-import { GetAllFilterService } from '../services/FilterService';
-import { Option, Select } from '@material-tailwind/react';
+import { GetAllFilterService, GetFilesByFilter } from '../services/FilterService';
+import { Button, Option, Select, Typography } from '@material-tailwind/react';
+import LoadingSkeleton from '../components/LoadingSkeleton';
+import NotesCard from '../components/NotesCard';
 function ViewNotes() {
   const [data, setData] = useState([]);
   const [branch, setBranch] = useState("");
   const [semester, setSemester] = useState("");
   const [subject, setSubject] = useState('');
-
+  const [files,setFiles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
+  const [filesLoaded, setFilesLoaded] = useState(false);
 
   function handleBranchChange(val) {
     setBranch(val);
@@ -31,8 +35,31 @@ function ViewNotes() {
 
   }
 
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    const data = {
+      branch,
+      semester,
+      subject
+    }
+    // console.log(data);
+    setIsLoading(true)
+    setFilesLoaded(true)
+    GetFilesByFilter(data)
+    .then(res=>{
+      console.log(res);
+      setFiles(res);
+      setIsLoading(false)
+      setFilesLoaded(false)
+    })
+    .catch(err=>{
+      console.log(err);
+      setIsLoading(false)
+      setFilesLoaded(false)
+    })
+  }
 
-
+  // console.log(files);
 
   useEffect(() => {
 
@@ -57,7 +84,7 @@ function ViewNotes() {
               Search notes.
             </h1>
           </header>
-          <form className='mt-16 mb-28  max-w-screen-lg w-full sm:w-96 '>
+          <form onSubmit={handleSubmit} className='mt-16 mb-28  max-w-screen-lg w-full sm:w-96 '>
             <div className='flex flex-col gap-6'>
 
               <Select variant='standard' size='lg' color='gray' label='Branch' onChange={(val) => handleBranchChange(val)}>
@@ -82,9 +109,50 @@ function ViewNotes() {
                   )) : <Option disabled>First select a semester</Option>
                 }
               </Select>
+              <Button loading={isLoading}  type='submit' variant="gradient" className="flex items-center justify-center gap-3 mt-4" fullWidth >
+                Search
+              </Button>
             </div>
           </form>
         </section>
+        <section className='flex flex-col items-center justify-center'>
+            <header className='flex items-center justify-center'>
+              <h1 className='text-2xl lg:text-3xl text-center font-semibold underline'>
+                All your uploaded notes are here.
+              </h1>
+            </header>
+
+            <div className={`flex flex-col w-full items-center justify-center gap-6 mb-10 ${data.length > 5 ? 'h-[50rem] overflow-y-auto' : ''} px-8 pt-8 pb-10`}>
+              {
+                !filesLoaded ? <>
+                  {
+                    files.length > 0 ? <>
+                      {
+                        files.map(item => (
+                          <NotesCard key={item._id}
+                            item={item}
+
+                          />))
+                      }
+                    </> : <Typography variant="h5" color="gray" className="mt-10 mb-10 font-light">
+                      No notes added yet....
+                    </Typography>
+                  }
+                </> : <>
+                  <div className='flex flex-col w-full items-center justify-center gap-6 mt-10'>
+                    <LoadingSkeleton />
+                    <LoadingSkeleton />
+                    <LoadingSkeleton />
+                    <LoadingSkeleton />
+                    <LoadingSkeleton />
+                    <LoadingSkeleton />
+                    <LoadingSkeleton />
+
+                  </div>
+                </>
+              }
+            </div>
+          </section>
       </div>
 
     </>

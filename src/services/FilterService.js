@@ -22,6 +22,27 @@ async function GetAllFilterService() {
   }
 }
 
+async function GetFilesByFilter(data){
+  const headers = {
+    "Content-Type": "application/json",
+    auth_token: localStorage.getItem('auth_token')
+  }
+  try {
+    console.log(data);
+    const res = await axios.post('/api/filter/filterfiles',data)
+
+    if (res.status === 200) {
+      return res.data.data.files;
+    }
+    else {
+      return [];
+    }
+  } catch (error) {
+    return error;
+  }
+}
+
 export {
-  GetAllFilterService
+  GetAllFilterService,
+  GetFilesByFilter
 }
