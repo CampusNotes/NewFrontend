@@ -9,9 +9,9 @@ import {
     Typography,
   } from "@material-tailwind/react";
 
-  import io from 'socket.io-client';
+//   import io from 'socket.io-client';
 
-const socket = io.connect('http://localhost:8000');
+// const socket = io.connect('http://localhost:8000');
 function Chat() {
     const [message, setMessage] = React.useState("");
 
@@ -44,9 +44,25 @@ function Chat() {
           <div className='container mx-auto px-4'>
   
             <section className='flex flex-col items-center justify-center '>
-            <div className="relative flex w-full max-w-[40rem]">
+            <div className="relative flex w-full max-w-[40rem] h-96 bg-light-blue-100">
 
                 <List>
+                <ListItem>
+          <ListItemPrefix>
+            <Avatar variant="circular" alt="candice" src="https://docs.material-tailwind.com/img/face-1.jpg" />
+          </ListItemPrefix>
+          <div>
+            <Typography variant="h6" color="blue-gray">
+              Tania Andrew
+            </Typography>
+            <Typography variant="small" color="gray" className="font-normal">
+              Software Engineer @ Material Tailwind
+            </Typography>
+          </div>
+        </ListItem>
+                </List>
+
+                {/* <List>
                 {messages.map((msg, index) => (
                     <div key={index}>
                                 <ListItem>
@@ -56,20 +72,20 @@ function Chat() {
                                             </ListItemPrefix>
                                     <div>
                                     <Typography variant="h6" color="blue-gray">
-                                                    {/* {msg.user_id.email} */}
+                                                    {msg.user_id.email}
                                     </Typography>
                                     <Typography variant="small" color="gray" className="font-normal">
-                                                    {/* {msg.text} */}
+                                                    {msg.text}
                                     </Typography>
                                     </div>
                                     </div>
                                                 
                                 </ListItem>
-                    </div>
+                                </div>
                     
-        ))}
+                    ))}
                     
-                </List>
+                </List> */}
                 
             </div>
 
@@ -82,7 +98,7 @@ function Chat() {
                     type="email"
                     label="Enter Message"
                     value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                    // onChange={(e) => setMessage(e.target.value)}
                     className="pr-20"
                     containerProps={{
                     className: "min-w-0",
@@ -93,7 +109,7 @@ function Chat() {
                     color={message ? "gray" : "blue-gray"}
                     disabled={!message}
                     className="!absolute right-1 top-1 rounded" 
-                    onClick={sendMessage}
+                    // onClick={sendMessage}
                 >
                     Send
                 </Button>
