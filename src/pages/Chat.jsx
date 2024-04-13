@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Input, Button } from "@material-tailwind/react";
 import {
   List,
@@ -20,13 +20,14 @@ function Chat() {
   const [message, setMessage] = React.useState("");
   const [messages, setMessages] = useState([]);
   const [activeMessages, setActiveMessages] = useState([]);
-
+  const msgRef = useRef(null)
 
   useEffect(() => {
     socket.on('newMessage', (messageData) => {
       console.log(messageData);
       setActiveMessages([...activeMessages, messageData])
     });
+    msgRef.current?.scrollIntoView()
   }, [activeMessages]);
 
   useEffect(() => {
@@ -35,6 +36,7 @@ function Chat() {
       .then(res => {
         console.log(res.data.data.chats);
         setMessages(res.data.data.chats);
+        msgRef.current?.scrollIntoView()
       })
       .catch(err => {
         console.log(err);
@@ -43,6 +45,7 @@ function Chat() {
     // return () => {
     //   socket.disconnect();
     // };
+
   }, []);
 
 
@@ -66,11 +69,11 @@ function Chat() {
               messages.length != 0 ? <>
                 {
                   messages.map(msg => {
-                    if (msg.user_id._id === user_id) {
-                      return (<ChatBubbleRight key={msg._id} message={msg.messagedata} />)
+                    if (msg.user_id?._id === user_id) {
+                      return (<ChatBubbleLeft key={msg._id} message={msg.messagedata} />)
                     }
                     else {
-                      return (<ChatBubbleLeft key={msg._id} message={msg.messagedata} />)
+                      return (<ChatBubbleRight key={msg._id} message={msg.messagedata} />)
                     }
                   })
                 }
@@ -85,10 +88,10 @@ function Chat() {
                 {
                   activeMessages.map((msg, i) => {
                     if (msg.user_id === user_id) {
-                      return (<ChatBubbleRight key={i} message={msg.text} />)
+                      return (<ChatBubbleLeft key={i} message={msg.text} />)
                     }
                     else {
-                      return (<ChatBubbleLeft key={i} message={msg.text} />)
+                      return (<ChatBubbleRight key={i} message={msg.text} />)
                     }
                   })
                 }
@@ -101,30 +104,8 @@ function Chat() {
 
 
 
-            {/* <List>
-                {messages.map((msg, index) => (
-                    <div key={index}>
-                                <ListItem>
-                                    <div className='flex flex-row items-center justify-center '>
-                                            <ListItemPrefix>
-                                                <Avatar variant="circular" alt="candice" src="https://docs.material-tailwind.com/img/face-1.jpg" />
-                                            </ListItemPrefix>
-                                    <div>
-                                    <Typography variant="h6" color="blue-gray">
-                                                    {msg.user_id.email}
-                                    </Typography>
-                                    <Typography variant="small" color="gray" className="font-normal">
-                                                    {msg.text}
-                                    </Typography>
-                                    </div>
-                                    </div>
-                                                
-                                </ListItem>
-                                </div>
-                    
-                    ))}
-                    
-                </List> */}
+
+            <div ref={msgRef}></div>
 
           </div>
 

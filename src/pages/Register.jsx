@@ -5,7 +5,7 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import RegisterImage from '../assets/Notes-bro (1).svg'
+import RegisterImage from '../assets/Notes-bro (2).svg'
 import { NavLink, useNavigate } from "react-router-dom";
 import validator from 'validator';
 import { useState } from "react";
@@ -18,6 +18,7 @@ export function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const profile = localStorage.getItem('isProfileCreated');
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
@@ -57,7 +58,7 @@ export function Register() {
       if (isRegistered) {
         setIsLoading(false);
         Notify('success', 'Registeration successfull');
-        navigate('/notes')
+        profile ? navigate('/notes') : navigate('/createprofile')
       }
       else {
         setIsLoading(false);
@@ -71,11 +72,11 @@ export function Register() {
 
   return (
     <>
-      <div className="bg-black ">
-        <div className="absolute bg-gray-300 w-full top-52 h-40">
+      <div className="bg-deep-purple-400 ">
+        <div className="absolute bg-purple-50 w-full top-52 h-40">
 
         </div>
-        <div className="absolute bg-gray-600 w-full top-96 h-40">
+        <div className="absolute bg-purple-400 w-full top-96 h-40">
 
         </div>
         <div className="relative container mx-auto grid grid-cols-1 lg:grid-cols-2 w-full h-screen px-8 gap-8">
@@ -140,7 +141,7 @@ export function Register() {
                   />
                 </div>
 
-                <Button loading={isLoading} type="submit" className="mt-6" fullWidth>
+                <Button loading={isLoading} color="green" type="submit" className="mt-6" fullWidth>
                   sign up
                 </Button>
                 <Typography color="gray" className="mt-4 text-center font-normal">

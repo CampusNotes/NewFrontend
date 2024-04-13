@@ -17,6 +17,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import { BookOpenIcon, ChatBubbleLeftRightIcon, MagnifyingGlassIcon, UserIcon } from "@heroicons/react/24/outline";
 
 export default function Sidebar() {
   const [active, setActive] = useState(1);
@@ -32,7 +33,7 @@ export default function Sidebar() {
         <NavLink to={'/notes'} className={({ isActive }) => (isActive ? setActive(1) : null)}>
           <ListItem selected={active == 1 ? true : false}>
             <ListItemPrefix>
-              <PresentationChartBarIcon className="h-5 w-5" />
+              <BookOpenIcon className="h-5 w-5" />
             </ListItemPrefix>
             Notes
           </ListItem>
@@ -41,7 +42,7 @@ export default function Sidebar() {
         <NavLink to={'/profile'} className={({ isActive }) => (isActive ? setActive(2) : null)}>
           <ListItem selected={active == 2 ? true : false}>
             <ListItemPrefix>
-              <PresentationChartBarIcon className="h-5 w-5" />
+              <UserIcon className="h-5 w-5" />
             </ListItemPrefix>
             Profile
           </ListItem>
@@ -50,7 +51,7 @@ export default function Sidebar() {
         <NavLink to={'/viewnotes'} className={({ isActive }) => (isActive ? setActive(3) : null)}>
           <ListItem selected={active == 3 ? true : false}>
             <ListItemPrefix>
-              <PresentationChartBarIcon className="h-5 w-5" />
+              <MagnifyingGlassIcon className="h-5 w-5" />
             </ListItemPrefix>
             Search Notes
           </ListItem>
@@ -59,7 +60,7 @@ export default function Sidebar() {
         <NavLink to={'/Chat'} className={({ isActive }) => (isActive ? setActive(4) : null)}>
           <ListItem selected={active == 4 ? true : false}>
             <ListItemPrefix>
-              <PresentationChartBarIcon className="h-5 w-5" />
+              <ChatBubbleLeftRightIcon className="h-5 w-5" />
             </ListItemPrefix>
             Chat
           </ListItem>

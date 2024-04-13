@@ -15,11 +15,13 @@ import Notes from "./pages/Notes"
 import ViewNotes from "./pages/ViewNotes"
 
 import Chat from "./pages/Chat"
+import CreateProfile from "./pages/CreateProfile"
+import ProfileRoutes from "./routes/ProfileRoutes"
 
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
-
+  const profile = localStorage.getItem('isProfileCreated');
 
   useEffect(() => {
     const load = () => {
@@ -39,12 +41,15 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route element={<PrivateRoutes><DashboardLayout /></PrivateRoutes>}>
-              <Route path="/notes" element={<Notes />} />
-              <Route path="/viewnotes" element={<ViewNotes />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/Chat" element={<Chat />} />
-            </Route>
+            <Route path='/createprofile' element={<CreateProfile />} />
+            {
+              <Route element={<PrivateRoutes><DashboardLayout /></PrivateRoutes>}>
+                <Route path="/notes" element={<Notes />} />
+                <Route path="/viewnotes" element={<ViewNotes />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/Chat" element={<Chat />} />
+              </Route>
+            }
             <Route path="*" element={<PageNotFound />} />
           </Routes>
       }

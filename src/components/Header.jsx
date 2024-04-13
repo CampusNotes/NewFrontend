@@ -15,6 +15,8 @@ export default function Header() {
   const [openNav, setOpenNav] = React.useState(false);
   const navigate = useNavigate();
   const [isloading, setIsLoading] = useState(false)
+  const profile = localStorage.getItem('isProfileCreated');
+  console.log(profile);
 
   const user = localStorage.getItem("auth_token");
 
@@ -106,14 +108,23 @@ export default function Header() {
                     <span>Sign in</span>
                   </Button>
                 </> : <>
-                  <Button
-                    variant="gradient"
-                    size="sm"
-                    className="hidden lg:inline-block"
-                    onClick={() => navigate('/notes')}
-                  >
-                    <span>Dashboard</span>
-                  </Button>
+                  {
+                    profile === true ? <Button
+                      variant="gradient"
+                      size="sm"
+                      className="hidden lg:inline-block"
+                      onClick={() => navigate('/notes')}
+                    >
+                      <span>Dashboard</span>
+                    </Button> : <Button
+                      variant="gradient"
+                      size="sm"
+                      className="hidden lg:inline-block"
+                      onClick={() => navigate('/createprofile')}
+                    >
+                      <span>Create Profile</span>
+                    </Button>
+                  }
                   <Button
                     color="red"
                     variant="gradient"

@@ -48,7 +48,7 @@ function DashboardNav() {
             />
           </div> */}
           <div className='flex items-center gap-4'>
-            <Button loading={isloading} className='hidden lg:flex items-center justify-center gap-2 ' variant='gradient' ripple={true} size='sm' onClick={handleLogout}>
+            <Button loading={isloading} color='red' className='hidden lg:flex items-center justify-center gap-2 ' variant='gradient' ripple={true} size='sm' onClick={handleLogout}>
               <PowerIcon className='h-4' />
               Log out
             </Button>
