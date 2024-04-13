@@ -14,6 +14,7 @@ import {
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import { CheckIcon } from '@heroicons/react/24/solid';
 import LoadingSkeleton from '../components/LoadingSkeleton';
+import Notify from '../helpers/Notify';
 
 
 function Profile() {
@@ -26,14 +27,17 @@ function Profile() {
   const [branch, setBranch] = useState('');
   const [editable, setEditable] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [update, setUpdate] = useState(0);
+  const [load, setLoad] = useState(false)
 
-  const headers = {
-    "Content-Type": "application/json",
-    auth_token: localStorage.getItem('auth_token')
-  }
+
 
   useEffect(() => {
     setIsLoading(true);
+    const headers = {
+      "Content-Type": "application/json",
+      auth_token: localStorage.getItem('auth_token')
+    }
     axios.get('api/profile/userdata', { headers })
       .then((res) => {
         if (res.status === 200) {
@@ -52,7 +56,73 @@ function Profile() {
         console.log(err);
         setIsLoading(false);
       })
-  }, [])
+  }, [setUpdate])
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const headers = {
+      "Content-Type": "application/json",
+      auth_token: localStorage.getItem('auth_token')
+    }
+
+    if (!firstname) {
+      Notify('error', 'Please enter first name')
+      return;
+    }
+
+    if (!lastname) {
+      Notify('error', 'Please enter last name')
+      return;
+    }
+
+    if (!gender) {
+      Notify('error', 'Please select gender')
+      return;
+    }
+
+    if (!college) {
+      Notify('error', 'Please enter college name')
+      return;
+    }
+
+    if (!year) {
+      Notify('error', 'Please select year')
+      return;
+    }
+
+    if (!branch) {
+      Notify('error', 'Please select branch')
+      return;
+    }
+
+    const data = {
+      firstname: firstname,
+      lastname: lastname,
+      gender: gender,
+      collegename: college,
+      year: year,
+      branch: branch
+    }
+
+    console.log(data);
+    setLoad(true);
+    axios.patch('/api/profile/updateprofile', data, { headers })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          Notify('success', 'Profile updated')
+        }
+        setLoad(false)
+        setEditable(true)
+        setUpdate((prev) => prev + 1)
+      })
+      .catch((err) => {
+        setLoad(false)
+        setEditable(true)
+        console.log(err);
+      })
+  }
+
 
   return (
     <div>
@@ -80,7 +150,7 @@ function Profile() {
                 </div>
               </CardHeader>
               <CardBody>
-                <form >
+                <form onSubmit={handleSubmit}>
                   <div className='"mb-1 flex flex-col gap-6'>
                     <Typography variant="h6" color="blue-gray" className="-mb-3">
                       Email
@@ -182,7 +252,7 @@ function Profile() {
                     </Select>
 
                   </div>
-                  {!editable && <Button loading={isLoading} type='submit' variant="gradient" className="flex items-center justify-center gap-3 mt-8" fullWidth >
+                  {!editable && <Button loading={load} type='submit' variant="gradient" className="flex items-center justify-center gap-3 mt-8" fullWidth >
                     <CheckIcon className='h-5 w-5' />
                     Update Profile
                   </Button>}

@@ -82,6 +82,7 @@ function CreateProfile() {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
+          Notify('success','Profile created')
           navigate('/notes')
         }
         setIsLoading(false)
