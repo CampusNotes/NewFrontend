@@ -13,13 +13,15 @@ import ChatBubbleLeft from '../components/ChatBubbleLeft';
 
 import io from 'socket.io-client';
 import axios from 'axios';
-const user_id = localStorage.getItem('user_id');
+import ProfileToolTip from '../components/ProfileToolTip';
+
 
 const socket = io.connect('http://localhost:8000');
 function Chat() {
   const [message, setMessage] = React.useState("");
   const [messages, setMessages] = useState([]);
   const [activeMessages, setActiveMessages] = useState([]);
+  const user_id = localStorage.getItem('user_id');
   const msgRef = useRef(null)
 
   useEffect(() => {
@@ -34,7 +36,7 @@ function Chat() {
     // Listen for new messages from the server
     axios.get('/api/message/allmessages')
       .then(res => {
-        console.log(res.data.data.chats);
+        // console.log(res.data.data.chats);
         setMessages(res.data.data.chats);
         msgRef.current?.scrollIntoView()
       })
@@ -54,7 +56,7 @@ function Chat() {
   const sendMessage = () => {
     // Emit the message to the server
     const user_id = localStorage.getItem('user_id');
-    console.log(message);
+    // console.log(message);
     socket.emit('sendMessage', { text: message, user_id: user_id });
     setMessage('');
   };
@@ -63,23 +65,33 @@ function Chat() {
       <div className='container mx-auto px-4'>
 
         <section className='flex flex-col items-center justify-center '>
-          <div id='chat-feed' className="relative flex flex-col w-full rounded-md h-96 bg-gray-100 overflow-y-auto px-4 py-4">
+          <div id='chat-feed' className="relative flex flex-col w-full rounded-md h-96 bg-deep-purple-50 overflow-y-auto px-4 py-4">
 
             {
               messages.length != 0 ? <>
                 {
                   messages.map(msg => {
                     if (msg.user_id?._id === user_id) {
-                      return (<ChatBubbleLeft key={msg._id} message={msg.messagedata} />)
+                      return (
+                        <ChatBubbleRight key={msg._id} message={msg.messagedata} firstname={msg.user_id?.firstname} lastname={msg.user_id?.lastname}
+                          email={msg.user_id?.email} branch={msg.user_id?.branch} year={msg.user_id?.year} />
+                      )
                     }
                     else {
-                      return (<ChatBubbleRight key={msg._id} message={msg.messagedata} />)
+                      return (<ChatBubbleLeft key={msg._id} message={msg.messagedata} firstname={msg.user_id?.firstname} lastname={msg.user_id?.lastname}
+                        email={msg.user_id?.email} branch={msg.user_id?.branch} year={msg.user_id?.year}
+                      />)
                     }
                   })
                 }
               </> : <>
-                <div>
-                  No previous messages
+              <div className='w-full flex items-center justify-center gap-20'>
+                  <div>
+                    <h1 className='text-center font-semibold text-2xl animate-bounce'>👋 Hi there! Welcome to the Chat.</h1>
+                    <div className='w-full h-1 bg-black animate-pulse'></div>
+                  </div>
+
+                  <img className='w-64 rounded-full' src="https://i.pinimg.com/originals/63/fd/ff/63fdff4b7c1964f08c3c16f18f581bd7.gif" alt="chat gif" />
                 </div>
               </>
             }
@@ -87,17 +99,24 @@ function Chat() {
               activeMessages.length != 0 ? <>
                 {
                   activeMessages.map((msg, i) => {
-                    if (msg.user_id === user_id) {
-                      return (<ChatBubbleLeft key={i} message={msg.text} />)
+                    if (msg.user_id?._id === user_id) {
+                      return (<ChatBubbleRight key={i} message={msg.messagedata} firstname={msg.user_id?.firstname} lastname={msg.user_id?.lastname}
+                        email={msg.user_id?.email} branch={msg.user_id?.branch} year={msg.user_id?.year} />)
                     }
                     else {
-                      return (<ChatBubbleRight key={i} message={msg.text} />)
+                      return (<ChatBubbleLeft key={i} message={msg.messagedata} firstname={msg.user_id?.firstname} lastname={msg.user_id?.lastname}
+                        email={msg.user_id?.email} branch={msg.user_id?.branch} year={msg.user_id?.year} />)
                     }
                   })
                 }
               </> : <>
-                <div>
-                  No Active messages
+                <div className='w-full flex items-center justify-center gap-20'>
+                  <div>
+                    <h1 className='text-center font-semibold text-2xl animate-bounce'>👋 Hi there! Start conversation...</h1>
+                    <div className='w-full h-1 bg-black animate-pulse'></div>
+                  </div>
+
+                  <img className='w-64 rounded-full' src="https://i.pinimg.com/originals/63/fd/ff/63fdff4b7c1964f08c3c16f18f581bd7.gif" alt="chat gif" />
                 </div>
               </>
             }
@@ -111,7 +130,7 @@ function Chat() {
 
 
         </section>
-        <section className='flex flex-col items-center justify-center mt-8'>
+        <section className='flex flex-col items-center justify-center mt-2'>
 
           <div className="relative flex w-full">
             <Input

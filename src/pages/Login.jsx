@@ -17,7 +17,8 @@ export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const profile = localStorage.getItem('isProfileCreated');
+  // const profile = JSON.parse(localStorage.getItem('isProfileCreated'));
+
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
@@ -43,12 +44,21 @@ export function Login() {
         email,
         password
       }
-      const isLoggedIn = await LoginService(data)
+      const {status,profile} = await LoginService(data)
 
-      if (isLoggedIn) {
+      if (status) {
         setIsLoading(false);
         Notify('success', 'Login successfull');
-        profile ? navigate('/notes') : navigate('/createprofile')
+
+
+        if (profile) {
+          navigate('/notes')
+        }
+        else {
+          Notify('info', 'Create profile');
+          navigate('/createprofile')
+        }
+
       }
       else {
 

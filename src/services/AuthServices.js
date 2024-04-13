@@ -9,12 +9,13 @@ async function RegisterService(data) {
       console.log(response);
       localStorage.setItem('auth_token', response.data.data.auth_token.token);
       localStorage.setItem('isProfileCreated', response.data.data.isPofileCreated);
+      localStorage.setItem('user_id', response.data.data.user_id);
+      return { status: true, profile: response.data.data.isPofileCreated }
 
-      return true;
     }
     else {
       Notify('error', response.data.message);
-      return false;
+      return { status: true, profile: false }
     }
   } catch (error) {
     console.log(error);
@@ -30,11 +31,12 @@ async function LoginService(data) {
 
       localStorage.setItem('auth_token', response.data.data.auth_token.token);
       localStorage.setItem('isProfileCreated', response.data.data.isPofileCreated);
-      return true
+      localStorage.setItem('user_id', response.data.data.user_id);
+      return { status: true, profile: response.data.data.isPofileCreated }
     }
     else {
       Notify('error', response.data.message);
-      return false;
+      return { status: true, profile: false };
     }
   } catch (error) {
     console.log(error.response.data.message);

@@ -18,7 +18,6 @@ export function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const profile = localStorage.getItem('isProfileCreated');
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
@@ -54,11 +53,17 @@ export function Register() {
         email,
         password
       }
-      const isRegistered = await RegisterService(data);
-      if (isRegistered) {
+      const {status,profile} = await RegisterService(data);
+      if (status) {
         setIsLoading(false);
         Notify('success', 'Registeration successfull');
-        profile ? navigate('/notes') : navigate('/createprofile')
+        if (profile) {
+          navigate('/notes')
+        }
+        else {
+          Notify('info', 'Create profile');
+          navigate('/createprofile')
+        }
       }
       else {
         setIsLoading(false);
