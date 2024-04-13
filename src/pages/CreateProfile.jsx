@@ -83,6 +83,7 @@ function CreateProfile() {
         console.log(res);
         if (res.status === 200) {
           Notify('success','Profile created')
+          localStorage.setItem('isProfileCreated',true)
           navigate('/notes')
         }
         setIsLoading(false)

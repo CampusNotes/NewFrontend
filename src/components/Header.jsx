@@ -189,9 +189,24 @@ export default function Header() {
                   <span>Sign in</span>
                 </Button>
               </> : <>
-                <Button fullWidth variant="gradient" size="sm" className="" onClick={() => navigate('/notes')}>
-                  <span>Dashboard</span>
-                </Button>
+                {
+                  profile === true ? <Button
+                  fullWidth
+                    variant="gradient"
+                    size="sm"
+                    onClick={() => navigate('/notes')}
+                  >
+                    <span>Dashboard</span>
+                  </Button> : <Button
+                  fullWidth
+                    variant="gradient"
+                    size="sm"
+
+                    onClick={() => navigate('/createprofile')}
+                  >
+                    <span>Create Profile</span>
+                  </Button>
+                }
                 <Button fullWidth variant="gradient" color="red" size="sm" className="" onClick={handleLogout}>
                   <span>Logout</span>
                 </Button>

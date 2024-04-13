@@ -62,7 +62,7 @@ function ChatBubbleLeft({
           </MenuList>
         </Menu>
         <div
-          className="mr-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
+          className="mr-3 text-sm max-w-60 lg:max-w-96 bg-white py-2 px-4 shadow rounded-xl"
         >
           {message}
         </div>

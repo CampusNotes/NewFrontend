@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Input, Button } from "@material-tailwind/react";
+import { Input, Button, Textarea } from "@material-tailwind/react";
 import {
   List,
   ListItem,
@@ -33,6 +33,7 @@ function Chat() {
   }, [activeMessages]);
 
   useEffect(() => {
+    document.addEventListener('keydown', detectKey, true);
     // Listen for new messages from the server
     axios.get('/api/message/allmessages')
       .then(res => {
@@ -50,6 +51,10 @@ function Chat() {
 
   }, []);
 
+  const detectKey = (e) => {
+    console.log(e.key);
+
+  }
 
 
 
@@ -64,8 +69,8 @@ function Chat() {
     <div>
       <div className='container mx-auto px-4'>
 
-        <section className='flex flex-col items-center justify-center '>
-          <div id='chat-feed' className="relative flex flex-col w-full rounded-md h-96 bg-deep-purple-50 overflow-y-auto px-4 py-4">
+        <section className='flex relative flex-col items-center justify-center '>
+          <div id='chat-feed' className="relative flex flex-col w-full rounded-md h-[50rem] bg-deep-purple-50 overflow-y-auto px-4 py-4">
 
             {
               messages.length != 0 ? <>
@@ -85,7 +90,7 @@ function Chat() {
                   })
                 }
               </> : <>
-              <div className='w-full flex items-center justify-center gap-20'>
+                <div className='w-full flex items-center justify-center gap-20'>
                   <div>
                     <h1 className='text-center font-semibold text-2xl animate-bounce'>👋 Hi there! Welcome to the Chat.</h1>
                     <div className='w-full h-1 bg-black animate-pulse'></div>
@@ -110,7 +115,7 @@ function Chat() {
                   })
                 }
               </> : <>
-                <div className='w-full flex items-center justify-center gap-20'>
+                <div className='w-full flex flex-col items-center justify-center gap-8'>
                   <div>
                     <h1 className='text-center font-semibold text-2xl animate-bounce'>👋 Hi there! Start conversation...</h1>
                     <div className='w-full h-1 bg-black animate-pulse'></div>
@@ -126,35 +131,31 @@ function Chat() {
 
             <div ref={msgRef}></div>
 
+
           </div>
-
-
-        </section>
-        <section className='flex flex-col items-center justify-center mt-2'>
-
-          <div className="relative flex w-full">
-            <Input
-              type="email"
-              label="Enter Message"
+          <section className='flex  w-full flex-col items-center justify-center mt-4 mb-12'>
+            <Textarea variant="outlined" label="Enter Message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               className="pr-20"
               containerProps={{
                 className: "min-w-0",
-              }}
-            />
-            <Button
-              size="sm"
-              color={message ? "gray" : "blue-gray"}
-              disabled={!message}
-              className="!absolute right-1 top-1 rounded"
-              onClick={sendMessage}
-            >
-              Send
-            </Button>
-          </div>
+              }} />
+            <div className='flex justify-end w-full'>
+              <Button
+                size="sm"
+                color={message ? "black" : "blue-gray"}
+                disabled={!message}
+                className=" rounded px-8"
+                onClick={sendMessage}
+              >
+                Send
+              </Button>
+            </div>
+          </section>
 
         </section>
+
 
       </div >
     </div >

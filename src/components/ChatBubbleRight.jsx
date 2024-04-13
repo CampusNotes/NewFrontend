@@ -24,7 +24,7 @@ function ChatBubbleRight({
     <>
       <div className="flex justify-end gap-4 mb-4">
         <div
-          className=" ml-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl"
+          className=" ml-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl max-w-60 lg:max-w-96"
         >
           {message}
         </div>
