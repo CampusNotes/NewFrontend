@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Filters from '../components/Filters';
+
 import axios from 'axios';
 import { GetAllFilterService, GetFilesByFilter } from '../services/FilterService';
 import { Button, Option, Select, Typography } from '@material-tailwind/react';
@@ -47,7 +47,7 @@ function ViewNotes() {
     setFilesLoaded(true)
     GetFilesByFilter(data)
       .then(res => {
-        
+
         setFiles(res);
         setIsLoading(false)
         setFilesLoaded(false)
@@ -65,7 +65,7 @@ function ViewNotes() {
 
     GetAllFilterService()
       .then(res => {
-        
+
         if (res.length != 0) {
           setData(res)
         }
