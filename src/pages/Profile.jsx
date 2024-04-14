@@ -129,7 +129,7 @@ function Profile() {
       <div className='container mx-auto mb-8'>
         {
           !isLoading ?
-            <Card className='px-4 mx-12'>
+            <Card className='px-4 mx-4 lg:mx-12'>
               <CardHeader className='flex items-center justify-between shadow-none mt-2'>
                 <div>
                   <h1 className='text-3xl text-black font-semibold'>

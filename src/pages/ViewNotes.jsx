@@ -85,7 +85,7 @@ function ViewNotes() {
             </h1>
           </header>
           <form onSubmit={handleSubmit} className='mt-16 mb-28  max-w-screen-lg w-full sm:w-96 '>
-            <div className='flex items-center justify-center w-full gap-6'>
+            <div className='flex flex-col lg:flex-row items-center justify-center w-full gap-6'>
 
               <Select variant='standard' size='lg' color='gray' label='Branch' onChange={(val) => handleBranchChange(val)}>
                 {

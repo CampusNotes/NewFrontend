@@ -76,14 +76,14 @@ function CreateProfile() {
       branch: branch
     }
 
-    
+
     setIsLoading(true);
     axios.patch('/api/profile/updateprofile', data, { headers })
       .then((res) => {
-       
+
         if (res.status === 200) {
-          Notify('success','Profile created')
-          localStorage.setItem('isProfileCreated',true)
+          Notify('success', 'Profile created')
+          localStorage.setItem('isProfileCreated', true)
           navigate('/notes')
         }
         setIsLoading(false)
@@ -97,7 +97,7 @@ function CreateProfile() {
   return (
     <div className='bg-purple-300 h-full  w-full'>
       <div className='container mx-auto p-8'>
-        <Card className='px-4 mx-12'>
+        <Card className='w-full h-full'>
           <CardHeader className='flex items-center justify-between shadow-none mt-2'>
             <div>
               <h1 className='text-3xl text-black font-semibold'>
