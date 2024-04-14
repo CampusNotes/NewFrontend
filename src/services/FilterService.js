@@ -28,7 +28,7 @@ async function GetFilesByFilter(data){
     auth_token: localStorage.getItem('auth_token')
   }
   try {
-    console.log(data);
+    
     const res = await axios.post('/api/filter/filterfiles',data)
 
     if (res.status === 200) {

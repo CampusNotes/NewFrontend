@@ -16,7 +16,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [isloading, setIsLoading] = useState(false)
   const profile = JSON.parse(localStorage.getItem('isProfileCreated'));
-  console.log(profile);
+  
 
   const user = localStorage.getItem("auth_token");
 

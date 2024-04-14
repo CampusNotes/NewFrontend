@@ -13,7 +13,7 @@ import ChatBubbleLeft from '../components/ChatBubbleLeft';
 
 import io from 'socket.io-client';
 import axios from 'axios';
-import ProfileToolTip from '../components/ProfileToolTip';
+
 
 
 const socket = io.connect('http://localhost:8000');
@@ -26,14 +26,14 @@ function Chat() {
 
   useEffect(() => {
     socket.on('newMessage', (messageData) => {
-      console.log(messageData);
+
       setActiveMessages([...activeMessages, messageData])
     });
     msgRef.current?.scrollIntoView()
   }, [activeMessages]);
 
   useEffect(() => {
-    document.addEventListener('keydown', detectKey, true);
+
     // Listen for new messages from the server
     axios.get('/api/message/allmessages')
       .then(res => {
@@ -51,10 +51,7 @@ function Chat() {
 
   }, []);
 
-  const detectKey = (e) => {
-    console.log(e.key);
 
-  }
 
 
 

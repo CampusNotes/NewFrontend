@@ -6,7 +6,7 @@ async function RegisterService(data) {
   try {
     const response = await axios.post('/api/auth/register', data);
     if (response.status === 201) {
-      console.log(response);
+      
       localStorage.setItem('auth_token', response.data.data.auth_token.token);
       localStorage.setItem('isProfileCreated', response.data.data.isPofileCreated);
       localStorage.setItem('user_id', response.data.data.user_id);
@@ -26,7 +26,7 @@ async function RegisterService(data) {
 async function LoginService(data) {
   try {
     const response = await axios.post('/api/auth/login', data);
-    console.log(response);
+    
     if (response.status === 200) {
 
       localStorage.setItem('auth_token', response.data.data.auth_token.token);

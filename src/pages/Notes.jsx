@@ -20,6 +20,7 @@ function Notes() {
   const [data, setData] = useState([]);
   const [filesLoaded, setFilesLoaded] = useState(false);
   const [filterData, setFilterData] = useState([]);
+  const [update,setUpdate] = useState(0);
 
   function clearData() {
     setBranch('')
@@ -76,11 +77,11 @@ function Notes() {
       .then(response => {
         console.log(response);
         if (response.status === 201) {
-          console.log(response.data.data.filesaved);
+          
           Notify('success', 'Notes added successfully');
           setIsLoading(false)
           clearData()
-
+          setUpdate(prev=>prev+1);
         }
         else {
           Notify('error', 'Cannot upload notes, please try again later!')
@@ -104,7 +105,7 @@ function Notes() {
     setFilesLoaded(true)
     axios.get('/api/file/allfiles', { headers })
       .then(res => {
-        console.log(res);
+   
         if (res.status === 200) {
           setData(res.data.data.files)
         }
@@ -130,7 +131,7 @@ function Notes() {
         console.log(error);
       })
 
-  }, [])
+  }, [update])
 
   return (
     <>
@@ -189,7 +190,7 @@ function Notes() {
               </h1>
             </header>
 
-            <div className={`flex flex-col w-full items-center justify-center gap-6 mb-10 ${data.length > 5 ? 'h-[50rem] overflow-y-auto ' : ''} px-8 pt-80 pb-10`}>
+            <div className={`flex flex-col w-full items-center justify-center gap-6 mb-10 ${data.length > 5 ? 'h-[50rem] overflow-y-auto ' : ''} px-8  pb-10`}>
               {
                 !filesLoaded ? <>
                   {

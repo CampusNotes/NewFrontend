@@ -47,7 +47,7 @@ function ViewNotes() {
     setFilesLoaded(true)
     GetFilesByFilter(data)
       .then(res => {
-        console.log(res);
+        
         setFiles(res);
         setIsLoading(false)
         setFilesLoaded(false)
@@ -65,7 +65,7 @@ function ViewNotes() {
 
     GetAllFilterService()
       .then(res => {
-        console.log(res);
+        
         if (res.length != 0) {
           setData(res)
         }

@@ -76,11 +76,11 @@ function CreateProfile() {
       branch: branch
     }
 
-    console.log(data);
+    
     setIsLoading(true);
     axios.patch('/api/profile/updateprofile', data, { headers })
       .then((res) => {
-        console.log(res);
+       
         if (res.status === 200) {
           Notify('success','Profile created')
           localStorage.setItem('isProfileCreated',true)
