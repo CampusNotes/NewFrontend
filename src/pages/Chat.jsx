@@ -15,7 +15,6 @@ import io from 'socket.io-client';
 import axios from 'axios';
 
 
-
 const socket = io.connect('http://localhost:8000');
 function Chat() {
   const [message, setMessage] = React.useState("");
