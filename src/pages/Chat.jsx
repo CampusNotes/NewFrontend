@@ -15,7 +15,7 @@ import io from 'socket.io-client';
 import axios from 'axios';
 
 
-const socket = io.connect('http://localhost:8000');
+const socket = io.connect(import.meta.env.VITE_BACKEND_URL);
 function Chat() {
   const [message, setMessage] = React.useState("");
   const [messages, setMessages] = useState([]);
